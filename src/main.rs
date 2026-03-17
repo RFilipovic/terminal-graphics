@@ -13,6 +13,9 @@ use helpers::serialize;
 use structs::*;
 use writer::{draw_line, set_pixel};
 
+use crate::perspective_projection::perspective_projection;
+use crate::writer::draw;
+
 fn main() -> Result<(), std::io::Error> {
     let mut out = io::stdout();
     let fb = FrameBuffer::new(FRAME_WIDTH, FRAME_HEIGHT);
@@ -30,17 +33,6 @@ fn main() -> Result<(), std::io::Error> {
         }
     */
 
-    let point0 = Point { x: 59, y: 29 };
-    let point1 = Point { x: 0, y: 0 };
-    draw_line(point0, point1, &mut render_data);
-
-    let point0 = Point { x: 59, y: 0 };
-    let point1 = Point { x: 0, y: 29 };
-    draw_line(point0, point1, &mut render_data);
-
-    println!("{}", serialize(&render_data, FRAME_WIDTH, FRAME_HEIGHT));
-
-    /*
     let cube_vertices = vec![
         Vec3 {
             x: -1.0,
@@ -83,7 +75,25 @@ fn main() -> Result<(), std::io::Error> {
             z: 1.0,
         },
     ];
-    */
+
+    let vertices = perspective_projection(cube_vertices);
+
+    let cube_edges = vec![
+        (0, 1),
+        (1, 2),
+        (2, 3),
+        (3, 0), // bottom face
+        (4, 5),
+        (5, 6),
+        (6, 7),
+        (7, 4), // top face
+        (0, 4),
+        (1, 5),
+        (2, 6),
+        (3, 7), // vertical edges
+    ];
+
+    draw(vertices, cube_edges, &mut render_data);
 
     Ok(())
 }

@@ -9,7 +9,7 @@ pub fn set_pixel(render_data: &mut [char], x: usize, y: usize, ch: char) {
     }
 }
 
-pub fn draw_line(point0: Point, point1: Point, render_data: &mut [char]) {
+pub fn draw_line(point0: &Point, point1: &Point, render_data: &mut [char]) {
     let mut x0 = point0.x as isize;
     let mut y0 = point0.y as isize;
     let x1 = point1.x as isize;
@@ -37,4 +37,17 @@ pub fn draw_line(point0: Point, point1: Point, render_data: &mut [char]) {
             y0 += sy;
         }
     }
+}
+
+pub fn draw(
+    vertices: Vec<Point>,
+    edges: Vec<(usize, usize)>,
+    render_data: &mut [char],
+) -> Option<()> {
+    for edge in edges {
+        let point0 = vertices.get(edge.0)?;
+        let point1 = vertices.get(edge.1)?;
+        draw_line(point0, point1, render_data);
+    }
+    Some(())
 }

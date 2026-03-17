@@ -16,6 +16,6 @@ pub struct Vec3 {
 }
 
 pub struct Point {
-    pub x: usize,
-    pub y: usize,
+    pub x: f32,
+    pub y: f32,
 }
