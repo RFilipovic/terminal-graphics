@@ -22,7 +22,7 @@ pub fn draw_line(point0: &Point, point1: &Point, render_data: &mut [char]) {
 
     let mut err = dx - dy;
     loop {
-        set_pixel(render_data, x0 as usize, y0 as usize, '*');
+        set_pixel(render_data, x0 as usize, y0 as usize, '#');
         if x0 == x1 && y0 == y1 {
             break;
         }

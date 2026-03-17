@@ -13,6 +13,7 @@ use helpers::serialize;
 use structs::*;
 use writer::{draw_line, set_pixel};
 
+use crate::helpers::transform_vec3_to_base;
 use crate::perspective_projection::perspective_projection;
 use crate::writer::draw;
 
@@ -33,7 +34,7 @@ fn main() -> Result<(), std::io::Error> {
         }
     */
 
-    let cube_vertices = vec![
+    let mut cube_vertices = vec![
         Vec3 {
             x: -1.0,
             y: -1.0,
@@ -76,6 +77,7 @@ fn main() -> Result<(), std::io::Error> {
         },
     ];
 
+    transform_vec3_to_base(&mut cube_vertices);
     let vertices = perspective_projection(cube_vertices);
 
     let cube_edges = vec![
@@ -94,6 +96,7 @@ fn main() -> Result<(), std::io::Error> {
     ];
 
     draw(vertices, cube_edges, &mut render_data);
+    println!("{}", serialize(&render_data, FRAME_WIDTH, FRAME_HEIGHT));
 
     Ok(())
 }
