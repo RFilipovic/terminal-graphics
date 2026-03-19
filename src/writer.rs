@@ -2,9 +2,7 @@ use crate::constants::{FRAME_HEIGHT, FRAME_WIDTH};
 use crate::structs::Point;
 
 pub fn set_pixel(render_data: &mut [char], x: usize, y: usize, ch: char) {
-    if x >= FRAME_WIDTH || y >= FRAME_HEIGHT {
-        println!("x must be less that FRAME_WIDTH, y must be less than FRAME_HEIGHT");
-    } else {
+    if x < FRAME_WIDTH && y < FRAME_HEIGHT {
         render_data[y * FRAME_WIDTH + x] = ch;
     }
 }

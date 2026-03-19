@@ -6,7 +6,7 @@ pub fn rotate_point(vertices: &mut Vec<Vec3>, axis: &char) {
         'x' => rotate_around_x(vertices),
         'y' => rotate_around_y(vertices),
         'z' => rotate_around_z(vertices),
-        _ => panic!("Jebeno ilegalnoooooo"),
+        _ => panic!("Wrong character passed to rotate_point"),
     }
 }
 
