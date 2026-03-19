@@ -41,7 +41,7 @@ pub fn draw_line(point0: &Point, point1: &Point, render_data: &mut [char]) {
 
 pub fn draw(
     vertices: Vec<Point>,
-    edges: Vec<(usize, usize)>,
+    edges: &Vec<(usize, usize)>,
     render_data: &mut [char],
 ) -> Option<()> {
     for edge in edges {

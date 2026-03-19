@@ -1,7 +1,7 @@
 use crate::constants::D;
 use crate::structs::{Point, Vec3};
 
-pub fn perspective_projection(vertices: Vec<Vec3>) -> Vec<Point> {
+pub fn perspective_projection(vertices: &Vec<Vec3>) -> Vec<Point> {
     let mut projections: Vec<Point> = Vec::new();
 
     for element in vertices {

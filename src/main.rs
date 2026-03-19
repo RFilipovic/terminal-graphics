@@ -5,6 +5,7 @@ use std::time::Duration;
 mod constants;
 mod helpers;
 mod perspective_projection;
+mod rotation;
 mod structs;
 mod writer;
 
@@ -14,24 +15,13 @@ use structs::*;
 
 use crate::helpers::transform_vec3_to_base;
 use crate::perspective_projection::perspective_projection;
+use crate::rotation::rotate_point;
 use crate::writer::draw;
 
 fn main() -> Result<(), std::io::Error> {
     //let mut out = io::stdout();
     let fb = FrameBuffer::new(FRAME_WIDTH, FRAME_HEIGHT);
-
     let mut render_data: Vec<char> = vec![' '; fb.width * fb.height];
-    /*
-        loop {
-            write!(out, "\x1b[2J")?;
-            out.flush()?;
-
-            write!(out, "\x1b[H")?;
-            out.flush()?;
-
-            println!("{}", serialize(&render_data, FRAME_WIDTH, FRAME_HEIGHT));
-        }
-    */
 
     let mut cube_vertices = vec![
         Vec3 {
@@ -77,7 +67,6 @@ fn main() -> Result<(), std::io::Error> {
     ];
 
     transform_vec3_to_base(&mut cube_vertices);
-    let vertices = perspective_projection(cube_vertices);
 
     let cube_edges = vec![
         (0, 1),
@@ -94,8 +83,26 @@ fn main() -> Result<(), std::io::Error> {
         (3, 7), // vertical edges
     ];
 
-    draw(vertices, cube_edges, &mut render_data);
+    //here the initialisation finishes
+
+    draw(
+        perspective_projection(&cube_vertices),
+        &cube_edges,
+        &mut render_data,
+    );
     println!("{}", serialize(&render_data, FRAME_WIDTH, FRAME_HEIGHT));
+
+    /*
+        loop {
+            write!(out, "\x1b[2J")?;
+            out.flush()?;
+
+            write!(out, "\x1b[H")?;
+            out.flush()?;
+
+            println!("{}", serialize(&render_data, FRAME_WIDTH, FRAME_HEIGHT));
+        }
+    */
 
     Ok(())
 }
